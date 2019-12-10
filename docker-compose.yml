@@ -1,0 +1,41 @@
+version: '2'
+services:
+    selenium:
+        container_name: selenium
+        build: selenium
+        ports:
+            - 4444:4444
+        volumes:
+            - /dev/shm:/dev/shm
+        environment:
+            - SE_OPTS=-sessionTimeout 86400
+    collector:
+        container_name: collector
+        build: collector
+        volumes:
+            - chatdata:/var/lib/app/superchat/
+            - "./log/debug/:/var/lib/app/debug/"
+            - "./secret/credentials.json:/var/lib/app/credentials.json"
+            - "./secret/token.json:/var/lib/app/token.json"
+        environment:
+            - YOUTUBE_WATCH_LIVE_KEY1
+            - YOUTUBE_WATCH_LIVE_KEY2
+            - YOUTUBE_WATCH_LIVE_KEY3
+            - YOUTUBE_WATCH_LIVE_KEY4
+            - YOUTUBE_WATCH_LIVE_KEY5
+            - YOUTUBE_WATCH_LIVE_KEY6
+            - YOUTUBE_WATCH_LIVE_KEY7
+            - YOUTUBE_WATCH_LIVE_KEY8
+            - YOUTUBE_WATCH_LIVE_KEY9
+            - SUPER_CHAT_SENTRY_DSN
+    data:
+        container_name: data
+        image: ubuntu:18.04
+        tty: true
+        volumes:
+            - chatdata:/var/lib/app/superchat/
+volumes:
+  esdata:
+    driver: local
+  chatdata:
+    driver: local
