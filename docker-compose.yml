@@ -28,6 +28,9 @@ services:
             - YOUTUBE_WATCH_LIVE_KEY8
             - YOUTUBE_WATCH_LIVE_KEY9
             - SUPER_CHAT_SENTRY_DSN
+            - ELASTICSEARCH_CLOUDID
+            - ELASTICSEARCH_USER
+            - ELASTICSEARCH_PASS
     data:
         container_name: data
         image: ubuntu:18.04
