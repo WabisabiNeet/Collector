@@ -9,6 +9,8 @@ services:
             - /dev/shm:/dev/shm
         environment:
             - SE_OPTS=-sessionTimeout 86400
+        networks:
+            - elasticsearch_network
     collector:
         container_name: collector
         build: collector
@@ -31,14 +33,22 @@ services:
             - ELASTICSEARCH_CLOUDID
             - ELASTICSEARCH_USER
             - ELASTICSEARCH_PASS
+        networks:
+            - elasticsearch_network
     data:
         container_name: data
         image: ubuntu:18.04
         tty: true
         volumes:
             - chatdata:/var/lib/app/superchat/
+        networks:
+            - elasticsearch_network
 volumes:
   esdata:
     driver: local
   chatdata:
     driver: local
+
+networks:
+    elasticsearch_network:
+        external: true
